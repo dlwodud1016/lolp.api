@@ -1,0 +1,14 @@
+[
+  {
+    "name": "default",
+    "type": "mariadb",
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
+    "password": "dev",
+    "database": "",
+    "synchronize": false,
+    "entities": ["dist/entities/*.js"],
+    "logging": ["error"]
+  }
+]
