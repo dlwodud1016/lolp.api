@@ -17,6 +17,12 @@ $ docker run -p 127.0.0.1:3306:3306 --name lolp-mariadb -v lolp-mariadb-vol:/var
 ## ./doc/database/mariadb-ddl.sql 적용
 ```
 
+## Environment
+- Riot API 발급 및 환경변수 등륵(Development API key 매일(유효기간 1day))
+  - Riot_Token: RGAPI-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+
+
+
 ## Running the app
 
 ```bash

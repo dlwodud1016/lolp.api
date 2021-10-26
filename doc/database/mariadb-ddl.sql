@@ -40,29 +40,6 @@ CREATE TABLE `champion_stats` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
--- lolp.champion_tags definition
-
-CREATE TABLE `champion_tags` (
-  `tag` varchar(24) NOT NULL,
-  PRIMARY KEY (`tag`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
--- lolp.summoner definition
-
-CREATE TABLE `summoner` (
-  `id` varchar(64) NOT NULL COMMENT 'Encrypted summoner ID',
-  `accountId` varchar(60) NOT NULL COMMENT 'Encrypted account ID',
-  `profileIconId` int(11) DEFAULT NULL COMMENT 'ID of the summoner icon associated with the summoner.',
-  `revisionDate` bigint(20) NOT NULL,
-  `name` varchar(256) NOT NULL COMMENT 'Summoner name.',
-  `puuid` varchar(79) DEFAULT NULL COMMENT 'Encrypted PUUID',
-  `summonerLevel` bigint(20) DEFAULT NULL COMMENT '	Summoner level associated with the summoner.',
-  `region` varchar(8) NOT NULL DEFAULT 'KR' COMMENT 'summoner region',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `summoner_name_UN` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='소환사';
-
 
 -- lolp.champion definition
 
@@ -74,6 +51,7 @@ CREATE TABLE `champion` (
   `title` varchar(256) NOT NULL,
   `blurb` varchar(1024) NOT NULL,
   `partype` varchar(60) NOT NULL,
+  `tags` varchar(128) NOT NULL,
   `stats_seq` int(11) NOT NULL,
   `info_seq` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -82,39 +60,3 @@ CREATE TABLE `champion` (
   CONSTRAINT `FK_champion_info_TO_champion` FOREIGN KEY (`info_seq`) REFERENCES `champion_info` (`seq`),
   CONSTRAINT `FK_champion_stats_TO_champion` FOREIGN KEY (`stats_seq`) REFERENCES `champion_stats` (`seq`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='챔피언';
-
-
--- lolp.champion_to_tags definition
-
-CREATE TABLE `champion_to_tags` (
-  `seq` int(11) NOT NULL AUTO_INCREMENT,
-  `champion_id` varchar(60) NOT NULL COMMENT '챔피언 ID',
-  `champion_tag` varchar(24) NOT NULL,
-  PRIMARY KEY (`seq`),
-  KEY `FK_champion_tags_TO_champion_to_tags` (`champion_tag`),
-  KEY `FK_champion_TO_champion_to_tags` (`champion_id`),
-  CONSTRAINT `FK_champion_TO_champion_to_tags` FOREIGN KEY (`champion_id`) REFERENCES `champion` (`id`),
-  CONSTRAINT `FK_champion_tags_TO_champion_to_tags` FOREIGN KEY (`champion_tag`) REFERENCES `champion_tags` (`tag`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
--- lolp.league definition
-
-CREATE TABLE `league` (
-  `leagueId` varchar(62) NOT NULL,
-  `queueType` varchar(48) NOT NULL,
-  `tier` varchar(24) NOT NULL,
-  `rank` varchar(12) NOT NULL,
-  `leaguePoints` int(11) NOT NULL,
-  `wins` int(11) NOT NULL,
-  `losses` int(11) NOT NULL,
-  `veteran` tinyint(1) NOT NULL DEFAULT 0,
-  `inactive` tinyint(1) NOT NULL DEFAULT 0,
-  `freshBlood` tinyint(1) NOT NULL DEFAULT 0,
-  `hotStreak` tinyint(1) NOT NULL DEFAULT 0,
-  `summonerId` varchar(64) NOT NULL,
-  `winRate` double NOT NULL DEFAULT 0,
-  PRIMARY KEY (`leagueId`),
-  KEY `league_FK` (`summonerId`),
-  CONSTRAINT `league_FK` FOREIGN KEY (`summonerId`) REFERENCES `summoner` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='리그정보 테이블';

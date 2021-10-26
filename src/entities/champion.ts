@@ -8,7 +8,6 @@ import {
 } from "typeorm";
 import { ChampionInfo } from "./championInfo";
 import { ChampionStats } from "./championStats";
-import { ChampionToTags } from "./championToTags";
 
 @Index("FK_champion_stats_TO_champion", ["statsSeq"], {})
 @Index("FK_champion_info_TO_champion", ["infoSeq"], {})
@@ -40,6 +39,9 @@ export class Champion {
   @Column("varchar", { name: "partype", length: 60 })
   partype: string;
 
+  @Column("varchar", { name: "tags", length: 128 })
+  tags: string;
+
   @Column("int", { name: "stats_seq" })
   statsSeq: number;
 
@@ -59,7 +61,4 @@ export class Champion {
   })
   @JoinColumn([{ name: "stats_seq", referencedColumnName: "seq" }])
   statsSeq2: ChampionStats;
-
-  @OneToMany(() => ChampionToTags, (championToTags) => championToTags.champion)
-  championToTags: ChampionToTags[];
 }

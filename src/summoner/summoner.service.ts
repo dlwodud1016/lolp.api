@@ -1,6 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { firstValueFrom, lastValueFrom } from "rxjs";
 import { Connection, Repository } from "typeorm";
 import { League } from "../entities/league";
 import { Summoner } from "../entities/summoner";
@@ -66,7 +65,7 @@ export class SummonerService {
         }
 
         // Step 1-1. 이후 MQ를 이용하여 소환사 상세정보를 취득하는게 효율적(나중에 하는걸로).
-        let lolLeagueEntries = await this.lolDeveloperApi.leagueEntry(summoner.id, region);
+        let lolLeagueEntries = await this.lolDeveloperApi.leagueEntries(summoner.id, region);
 
         console.log("lolLeagueEntry : ", lolLeagueEntries);
       
