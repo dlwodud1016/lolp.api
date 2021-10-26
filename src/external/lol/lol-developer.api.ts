@@ -7,6 +7,7 @@ import { lastValueFrom, map } from "rxjs";
 export class LolDeveloperApi{
     private readonly logger = new Logger(LolDeveloperApi.name);
     private readonly lolRootApi:string = "api.riotgames.com/lol";
+    private readonly lolCdnRootUrl:string = 'http://ddragon.leagueoflegends.com/cdn';
 
     constructor(private httpService: HttpService) {}
 
@@ -19,7 +20,7 @@ export class LolDeveloperApi{
         ))
     }
 
-    async leagueEntry(encryptedSummonerId: string, region: string){
+    async leagueEntries(encryptedSummonerId: string, region: string){
       let url = `https://${region.toLowerCase()}.${this.lolRootApi}/league/v4/entries/by-summoner/${encryptedSummonerId}`;
 
       return await lastValueFrom(await this.httpService.get(url)
@@ -28,6 +29,16 @@ export class LolDeveloperApi{
       ))
     }
 
+    async champions(version: string = '11.21.1'){
+
+        // 영문설명 : en_US, 한글: ko_KR
+        let url = `${this.lolCdnRootUrl}/${version}/data/en_US/champion.json`; 
+
+        return await lastValueFrom(await this.httpService.get(url)
+        .pipe(
+            map((response) => {return response.data}),
+        ))
+    }
 
 
 }
