@@ -13,11 +13,11 @@ export class ChampionController {
         private championTaskService: ChampionTaskService
         ) { }
 
-    @Get('renewal')
+    @Get('patch')
     @ApiOperation({description: '챔피언 갱신'})
     @ApiQuery({name: 'region', description: '지역', example: "KR"})
-    async renewal(@Query('region') region: string = REGION.KR) {
+    async patch(@Query('region') region: string = REGION.KR) {
         
-        return await this.championTaskService.renewalChampion();
+        return await this.championTaskService.patchChampion(region);
     }
 }

@@ -11,6 +11,7 @@ import { SummonerDto } from "./dto/summoner.dto";
 
 @Injectable()
 export class SummonerService {
+    
 
     private readonly logger = new Logger(SummonerService.name);
     
@@ -34,6 +35,7 @@ export class SummonerService {
 
         return (wins / total) * 100;
     }
+
     async getBySummonerName(name: string, region: string = REGION.KR) {
         
         let summoner:Summoner = null;
@@ -90,7 +92,6 @@ export class SummonerService {
                 league.summonerId = entry['summonerId'];
                 league.winRate = this.winRate(league.wins, league.losses);
 
-                //await this.leagueRepository.save(league);
                 await manager.save(league);
             });
         });
@@ -99,5 +100,9 @@ export class SummonerService {
 
         // Step 2. 기본정보 응답(소환사명, 티어, 승률, 아이콘ID)
         return SummonerDto.toDto(summoner.id, summoner.name, tier, this.winRate(wins, losses), summoner.profileIconId);
+    }
+
+    getChampionRankingByName(name: string, region: string) {
+        
     }
 }

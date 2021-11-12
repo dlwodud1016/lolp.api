@@ -8,6 +8,8 @@ import configuration from './config/config.database';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ChampionModule } from './champion/champion.module';
+import { RenewalController } from './renewal/renewal.controller';
+import { RenewalModule } from './renewal/renewal.module';
 
 @Module({
   imports: [
@@ -33,9 +35,9 @@ import { ChampionModule } from './champion/champion.module';
     ScheduleModule.forRoot(),
 
     // module
-    SummonerModule, ChampionModule
+    SummonerModule, ChampionModule, RenewalModule
   ],
-  controllers: [AppController],
+  controllers: [AppController, RenewalController],
   providers: [AppService],
 })
 export class AppModule { }

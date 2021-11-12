@@ -56,3 +56,6 @@ $ npm run test:cov
 ## TypeOrm Entity
 - typeorm-model-generator -h localhost -d lolp -p 3306 -u root -x dev -e mariadb
 
+
+## Gganbu requirements 
+  1. 우선 내가 잘하는 포지션/챔피언 and 발전 가능성 있는 포지션/챔피언을 찾아준다.

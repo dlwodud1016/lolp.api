@@ -77,7 +77,7 @@ export class ChampionTaskService {
 
   @Cron('0 0 12 * * WED')
   //@Cron(CronExpression.EVERY_30_SECONDS) // 테스트
-  async renewalChampion() {
+  async patchChampion(region: string) {
     this.logger.debug('Called when the current second is 45');
 
     const champions = await this.lolDeveloperApi.champions();
